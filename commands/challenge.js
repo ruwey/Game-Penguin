@@ -1,5 +1,6 @@
 import { SlashCommandBuilder, userMention } from "@discordjs/builders";
 import express from "express";
+import subdomain from "express-subdomain";
 import { Formatters, ThreadManager } from "discord.js";
 import EventEmitter from "events";
 
@@ -8,8 +9,11 @@ class MyEmitter extends EventEmitter {}
 const emit = new MyEmitter();
 
 const app = express();
+const router = express.Router();
 const port = 3000;
 app.listen(port);
+
+app.use(subdomain('gp', router))
 
 app.get('/return/:id/:boardState/:turn', (req, res) => {
   res.send("Sucsess");

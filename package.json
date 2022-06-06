@@ -12,9 +12,11 @@
     "discord-api-types": "^0.33.3",
     "discord.js": "^13.7.0",
     "dotenv": "^16.0.1",
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "express-subdomain": "^1.0.5"
   },
   "devDependencies": {
-    "nodemon": "^2.0.16"
+    "nodemon": "^2.0.16",
+    "pm2": "^5.2.0"
   }
 }
