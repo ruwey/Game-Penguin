@@ -5,8 +5,16 @@
   "main": "index.js",
   "author": "ruwey",
   "license": "AGPLv3",
+  "type": "module",
   "dependencies": {
+    "@discordjs/builders": "^0.14.0",
+    "@discordjs/rest": "^0.5.0",
+    "discord-api-types": "^0.33.3",
     "discord.js": "^13.7.0",
-    "dotenv": "^16.0.1"
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
   }
 }
