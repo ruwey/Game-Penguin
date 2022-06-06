@@ -1,7 +1,6 @@
 import fs from 'fs';
 import { URL } from 'url';
 import { Client, Collection, Intents } from 'discord.js';
-import express from "express";
 import 'dotenv/config';
 
 // Setup
