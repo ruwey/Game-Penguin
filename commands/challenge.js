@@ -15,6 +15,10 @@ app.get('/return/:id/:boardState/:turn', (req, res) => {
   res.send("Sucsess");
   emit.emit('state-update', req.params);
 })
+app.get('/win/:id/:turn', (req, res) => {
+  res.send("Sucsess")
+  emit.emit('game-win', req.params);
+})
 
 const data = new SlashCommandBuilder()
       .setName('challenge')
@@ -57,6 +61,7 @@ async function execute(interaction) {
 
 async function tictactoe(interaction) {
   const user = interaction.options.getUser('opponent')
+  console.log(user.username + " " + interaction.user.username)
   let msg = await interaction.reply({ content: interaction.user.username + " has challenged " +
                       Formatters.userMention(user.id) + " to a dual!\n" +
                       "[Accept?](http://localhost:3001/?pos=NNNNNNNNN&turn=X&id=" + interaction.id+")",
@@ -64,10 +69,21 @@ async function tictactoe(interaction) {
   let thread = await msg.startThread({name: "TicTacToe: " + user.username + " vs " + interaction.user.username});
   emit.on('state-update', (p) => {
     if (p.id != interaction.id) return;
-    if (p.turn === '0')
+    if (p.turn === 'O')
       thread.send({content: Formatters.userMention(interaction.user.id) + " http://localhost:3001/?pos="+p.boardState+"&turn="+p.turn+"&id="+p.id+""})
     else
       thread.send({content: Formatters.userMention(user.id) + " http://localhost:3001/?pos="+p.boardState+"&turn="+p.turn+"&id="+p.id+""})
+  })
+  emit.on('game-win', (p) => {
+    console.log("winner");
+    if (p.id != interaction.id) return;
+    if (p.turn === "O")
+      thread.send(user.username + " wins!")
+    else if (p.turn === 'X')
+      thread.send(interaction.user.username + " wins!")
+    else
+      thread.send("No One Winds =(")
+    thread.setArchived(true);
   })
 }
 
